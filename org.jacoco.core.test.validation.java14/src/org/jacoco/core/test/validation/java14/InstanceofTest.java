@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.jacoco.core.test.validation.java14;
 
+import org.jacoco.core.test.validation.JavaVersion;
 import org.jacoco.core.test.validation.Source.Line;
 import org.jacoco.core.test.validation.ValidationTestBase;
 import org.jacoco.core.test.validation.java14.targets.InstanceofTarget;
@@ -26,7 +27,7 @@ public class InstanceofTest extends ValidationTestBase {
 	}
 
 	public void assertInstanceof(final Line line) {
-		if (isJDKCompiler && JAVA_VERSION.isBefore("15")) {
+		if (isJDKCompiler && JavaVersion.current().isBefore("15")) {
 			// https://bugs.openjdk.java.net/browse/JDK-8237528
 			assertFullyCovered(line, 1, 3);
 		} else {

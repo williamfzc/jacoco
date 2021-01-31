@@ -43,6 +43,7 @@ import org.jacoco.report.check.Rule;
 import org.jacoco.report.check.RulesChecker;
 import org.jacoco.report.csv.CSVFormatter;
 import org.jacoco.report.html.HTMLFormatter;
+import org.jacoco.report.sxml.SXMLFormatter;
 import org.jacoco.report.xml.XMLFormatter;
 
 /**
@@ -96,6 +97,13 @@ final class ReportSupport {
 		formatters.add(xml.createVisitor(new FileOutputStream(targetfile)));
 	}
 
+	public void addSxmlFormatter(final File targetfile, final String encoding)
+			throws IOException {
+		final SXMLFormatter sxml = new SXMLFormatter();
+		sxml.setOutputEncoding(encoding);
+		formatters.add(sxml.createVisitor(new FileOutputStream(targetfile)));
+	}
+
 	public void addCsvFormatter(final File targetfile, final String encoding)
 			throws IOException {
 		final CSVFormatter csv = new CSVFormatter();
@@ -119,6 +127,7 @@ final class ReportSupport {
 			final String footer, final Locale locale) throws IOException {
 		targetdir.mkdirs();
 		addXmlFormatter(new File(targetdir, "jacoco.xml"), encoding);
+		addSxmlFormatter(new File(targetdir, "jacoco_slim.xml"), encoding);
 		addCsvFormatter(new File(targetdir, "jacoco.csv"), encoding);
 		addHtmlFormatter(targetdir, encoding, footer, locale);
 	}
